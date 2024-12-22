@@ -37,23 +37,35 @@ public class Constants {
 			
 			case RUNNING:
 				return 12;
+			case RUNNINGLEFT:
+				return 12;
 			case IDLE:
+				return 6;
+			case IDLE_LEFT:
 				return 6;
 			case JUMP:
 				return 6;
+			case JUMP_LEFT:
+				return 6;
 			case DOWN_BLOCK:
 				return 1;
-//			case GROUND:
+			case DOWN_BLOCK_LEFT:
+				return 1;
 			case DOWN_ATTK:
+				return 5;
+			case DOWN_ATTK_LEFT:
 				return 5;
 			case ATTACK_1:
 				return 5;
+			case ATTACK_1_LEFT:
+				return 5;
 			case JUMP_ATTK:
+				return 6;
+			case JUMP_ATTK_LEFT:
 				return 6;
 			default:
 				return 1;
 			}
 		}
 	}
-
 }

@@ -15,7 +15,7 @@ public class GameWindow{
 	    frame.add(GP);
 	    frame.setResizable(true);
 	    frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//	    frame.setUndecorated(true); 
+	    frame.setUndecorated(true); 
 	    frame.pack();
 	    
 	    frame.addWindowFocusListener(new WindowFocusListener(){
@@ -23,15 +23,11 @@ public class GameWindow{
 	        public void windowGainedFocus(WindowEvent e) {
 	            GP.getGame().windowFocusLost();
 	        }
-
 	        @Override
 	        public void windowLostFocus(WindowEvent e) {
 	            GP.getGame().windowFocusLost();
 	        }
 	    });
-	    
 	    frame.setVisible(true);
 	}
-
-
-	}
+}
