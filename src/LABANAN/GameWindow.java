@@ -4,6 +4,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowFocusListener;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 public class GameWindow{
 	
@@ -29,5 +30,20 @@ public class GameWindow{
 	        }
 	    });
 	    frame.setVisible(true);
+	}
+
+	public void add(JPanel gameOverPanel) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void revalidate() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void repaint() {
+		// TODO Auto-generated method stub
+		
 	}
 }

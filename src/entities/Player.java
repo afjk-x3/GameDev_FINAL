@@ -32,6 +32,7 @@ public class Player {
     private float x, y;
     private boolean debugHitbox = true;    
     private int health = 500;
+    private int maxHealth;
     private int stamina = 100;
     private int attackDamage = 1;
     private int attackRange = 50; // Attack range in pixels
@@ -55,7 +56,9 @@ public class Player {
     private boolean isKnockedBack = false;  // Flag to check if the player is currently knocked back
     private int knockbackDirection = 0;  // Direction of the knockback (1 = right, -1 = left)
 
-
+    private boolean isFalling = false;
+    private int healthReductionCounter = 0;
+    
     // Spawn coordinates for respawn
     private float spawnX, spawnY;
 
@@ -77,7 +80,6 @@ public class Player {
         loadAnimations(spriteSheet);
     }
 
-
     public void update() {
         if (health <= 0) {
             die();  // If health reaches 0, restart the player
@@ -96,9 +98,7 @@ public class Player {
             hitbox.setLocation((int) x + 50, (int) y + 50);
         }
     }
-
-
-
+    
     private void loadAnimations(String spriteSheet) {
         BufferedImage img = LoadSave.GetSpriteAtlas(spriteSheet);
         animations = new BufferedImage[20][12]; // Assuming a 20x12 sprite layout
@@ -129,8 +129,7 @@ public class Player {
 		g.drawImage(animations[playerAction][aniIndex], (int) x, (int) y, 150, 150, null);
 
 	}
-
-	
+	 
 	 private void setAnimation() {
 		    int startAni = playerAction;
 
@@ -166,7 +165,6 @@ public class Player {
 		    }
 		}
 
-	
 	private void resetAniTick() {
 		aniTick = 0;
 		aniIndex = 0;
@@ -246,7 +244,6 @@ public class Player {
 	    hitbox.setLocation((int) x, (int) y);
 	}
 
-
     // Update sword hitbox when attacking
 	private void updateSwordHitbox() {
 	    if (attacking) {
@@ -299,7 +296,6 @@ public class Player {
 	        sungkitHitbox.setBounds(0, 0, 0, 0);
 	    }
 	}
-	
 	
 	private void updateLaunchHitbox() {
 	    if (launch) {
@@ -357,13 +353,6 @@ public class Player {
 	    this.knockbackTimer = knockbackDuration;  // Start knockback timer for the attacker
 	}
 
-	private Rectangle getLaunchHitbox() {
-		return launchHitbox;
-	}
-	private Rectangle getSungkitHitbox() {
-		return sungkitHitbox;
-	}
-
     public Rectangle getHitbox() {
         return hitbox;
     }
@@ -393,6 +382,7 @@ public class Player {
         g.setColor(Color.GREEN);
         g.fillRect(healthBarX, healthBarY, (int) (barWidth * (health / 150.0)), barHeight);  // Scale health based on max value
     }
+    
     public void renderHitboxes(Graphics g) {
         if (debugHitbox) {
             // Draw player hitbox (red for debugging)
@@ -429,6 +419,7 @@ public class Player {
     public void die() {
         resetPlayer();  // Reset the player's position and health
     }
+    
     public void takeDamage(int damage, int attackerDirection) {
         // Only apply damage if the player is not blocking
         if (!blocking) {
@@ -457,6 +448,26 @@ public class Player {
         }
     }
     
+//    public void reduceHealthGradually() {
+//        // Reduce health by 100 every second (simulate with a counter)
+//        healthReductionCounter++;
+//        if (healthReductionCounter >= 1000) { // Assuming 60 ticks per second
+//            health -= 300;
+//            healthReductionCounter = 0;
+//        }
+//        if (health < 0) {
+//            health = 0;
+//        }
+//    }
+    
+    public void respawn() {
+        setX(spawnX); // Reset to initial spawn position
+        setY(spawnY); // Reset to initial spawn position
+        health = maxHealth; // Reset health
+        isFalling = false;  // Reset falling state
+        healthReductionCounter = 0; // Reset counter
+    }
+
     
     // Reset the player's position, health, and other stats
     public void resetPlayer() {
@@ -501,6 +512,10 @@ public class Player {
 	public void setWidth(int width) {this.width = width;}
 	public int getHeight() {return height;}
 	public void setHeight(int height) {this.height = height;}
-	public int getHealth() {return health;
-	}
+	public int getHealth() {return health;}
+	public void setHealth(int health) {this.health = health;}
+    public int getMaxHealth() {return maxHealth;}
+    public boolean isFalling() {return isFalling;}
+    public void setFalling(boolean falling) {this.isFalling = falling; }
+	
 }
